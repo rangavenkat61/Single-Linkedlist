@@ -1,0 +1,103 @@
+#creating a node
+class node():
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+#ceating a linked list
+class singlelinkedlist():
+    def __init__(self):
+        self.head = None
+#check if linkd list is empty or not
+    def is_empty(self):
+        return not self.head
+#return the nodes of linked list
+    def __str__(self):
+        list = ""
+        current = self.head
+        while current != None:
+            list += f"{current.value}-->"
+            current = current.next
+        list += "None"
+        return list
+#add a new_node at the front of the linked list
+    def add_front(self, new_node):
+        if self.is_empty():
+            self.head = new_node
+        else:
+            new_node.next = self.head
+            self.head = new_node
+#add a new_node at the end of the linked list
+    def add_back(self, new_node):
+        if self.is_empty():
+            self.head = new_node
+        else:
+            last = self.head
+            while last.next != None:
+                last = last.next
+
+            last.next = new_node
+#add a node before a particular node
+    def insert_before(self, target_node, new_node):
+        target = self.head
+        prev_node = None
+        while target.value != target_node:
+            prev_node = target
+            target = target.next
+        new_node.next = prev_node.next
+        prev_node.next = new_node
+# check if the given node is in the linked list or not
+    def node_in_list(self, key):
+        node = self.head
+        while node != None:
+            if node.value == key:
+                print(f"key {key} exists")
+                break
+            node = node.next
+        else:
+            print(f"the {key}doen't present")
+#removing the first node in linked list
+    def remove_first(self):
+        if self.is_empty():
+            print('empty list')
+        self.head = self.head.next
+#removing the last node in linked list
+    def remove_last(self):
+        target = self.head
+        prev = None
+        while target.next != None:
+            prev = target
+            target = target.next
+        prev.next = None
+#removing a partiular node
+    def remove_key(self, key):
+        target = self.head
+        prev = None
+        while target.value != key:
+            prev = target
+            target = target.next
+        prev.next = target.next
+
+#main function
+if __name__ == '__main__':
+    s = singlelinkedlist()
+    s.add_front(node(3))
+    s.add_front(node(2))
+    s.add_front(node(1))
+    s.add_back(node(4))
+    print(s)
+    # 1-->2-->3-->4-->None
+    s.insert_before(3, node(2.5))
+    print(s)
+    #1-->2-->2.5-->3-->4-->None
+    s.node_in_list(3)
+    #key 3 exists
+    s.remove_first()
+    print(s)
+    #2-->2.5-->3-->4-->None
+    s.remove_last()
+    print(s)
+    #2-->2.5-->3-->None
+    s.remove_key(2.5)
+    print(s)
+    #2-->3-->None
